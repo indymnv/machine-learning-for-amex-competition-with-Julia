@@ -2,6 +2,7 @@ using DataFrames, Parquet, CSV
 using Statistics
 using Plots
 using Dates
+using XGBoost
 
 function read_df()
 
@@ -21,19 +22,4 @@ train, test, sub, labels = read_df()
 train.S_2 = Date.(train.S_2, "yyyy-mm-dd")
 test.S_2 = Date.(test.S_2, "yyyy-mm-dd")
 
-#Select first customer in train DataFrame
-
-function filter_by_client(position::Int)
-  customer = train.customer_ID[position]
-  first_client(name::String)= name == customer #Create function to filter the client
-  client_df = filter(:customer_ID => first_client, train)
-  
-  return client_df
-
-end
-
-client_df = filter_by_client(56)
-
-plot( client_df.S_2, client_df.P_2 )
-plot!( client_df.S_2, client_df.B_2 )
-plot!(title="P_2 for client A")
+#split dataframe
